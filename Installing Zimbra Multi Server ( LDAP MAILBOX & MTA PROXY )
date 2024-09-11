@@ -8,3 +8,27 @@ Download Zimbra and Get Link here : https://www.zimbra.com/product/download/zimb
 # cd zcs-NETWORK-X.X.X
 
 // Installing Ldap Server ( Node1 )
+
+
+
+
+
+
+// Installing MTA Proxy ( Node2 )
+Do you agree with the terms of the software license agreement? [N] Y
+Use Zimbra's package repository [Y] Y
+
+Install zimbra-ldap [Y] N
+Install zimbra-logger [Y] N
+Install zimbra-mta [Y] Y
+Install zimbra-dnscache [Y] N
+Install zimbra-snmp [Y] Y
+Install zimbra-license-daemon [Y] Y
+Install zimbra-store [Y] N
+Install zimbra-spell [Y] N
+Install zimbra-memcached [Y] Y
+Install zimbra-proxy [Y] Y
+Install zimbra-archiving [N] N
+Install zimbra-onlyoffice [Y] N
+
+The system will be modified.  Continue? [N] Y
