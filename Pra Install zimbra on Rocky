@@ -4,6 +4,9 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 192.168.56.103  ldapmbox.adt.lab  ldapmbox
 
+// Konfigurasi Hostname
+# hostnamectl set-hostname ldapmbox.adt.lab
+
 // Konfigurasi file /etc/resolv.conf
 // Instalasi DNS Masqurade 
 
