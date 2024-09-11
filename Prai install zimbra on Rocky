@@ -1,0 +1,48 @@
+// Konfigurasi file /etc/hosts
+# nano /etc/hosts
+
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+192.168.56.103  ldapmbox.adt.lab  ldapmbox
+
+// Konfigurasi file /etc/resolv.conf
+// Instalasi DNS Masqurade 
+
+// Disable SELinux
+# nano /etc/selinux/config
+  # This file controls the state of SELinux on the system.
+  # SELINUX= can take one of these three values:
+  #     enforcing - SELinux security policy is enforced.
+  #     permissive - SELinux prints warnings instead of enforcing.
+  #     disabled - No SELinux policy is loaded.
+  SELINUX=disabled
+  # SELINUXTYPE= can take one of these two values:
+  #     targeted - Targeted processes are protected,
+  #     minimum - Modification of targeted policy. Only selected processes are protected.
+  #     mls - Multi Level Security protection.
+  SELINUXTYPE=targeted
+
+# setenforce 0
+
+// Disable IPTABLES
+# systemctl stop firewalld
+# systemctl disable firewalld
+
+// Disable POSTFIX
+# systemctl stop postfix
+# systemctl disable postfix
+
+// Disable IPv6
+# nano /etc/sysctl.d/98-disable_ipv6.conf
+  net.ipv6.conf.all.disable_ipv6 = 1
+  net.ipv6.conf.default.disable_ipv6 = 1
+
+# sysctl -p
+
+// Instalasi Paket Dependency
+#  yum -y install wget perl perl-core libaio tmux screen lshw iperf3 rsync sysstat net-tools telnet mlocate bind-utils nmap nmap-ncat libreoffice libreoffice-headless lsof htop ncdu libreoffice-langpack-*
+
+// Instalasi Imapsync
+# yum -y install epel-release
+# yum -y install imapsync
+
+
