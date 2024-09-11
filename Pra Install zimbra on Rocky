@@ -41,8 +41,4 @@
 // Instalasi Paket Dependency
 #  yum -y install wget perl perl-core libaio tmux lshw iperf3 rsync sysstat net-tools telnet mlocate bind-utils nmap nmap-ncat libreoffice libreoffice-headless lsof libreoffice-langpack-*
 
-// Instalasi Imapsync
-# yum -y install epel-release
-# yum -y install imapsync
-
 
