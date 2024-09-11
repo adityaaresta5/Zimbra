@@ -1,0 +1,10 @@
+Download Zimbra and Get Link here : https://www.zimbra.com/product/download/zimbra-collaboration-network-edition/
+
+
+
+// Download zimbra 
+# wget https://files.zimbra.com/downloads/10.1.0_GA/zcs-NETWORK-10.1.0_GA_4633.RHEL8_64.20240610085557.tgz
+# tar xvf zcs-NETWORK-X.X.X.tgz
+# cd zcs-NETWORK-X.X.X
+
+// Installing Ldap Server ( Node1 )
