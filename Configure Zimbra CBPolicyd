@@ -1,0 +1,111 @@
+// Enable service CBPolicyd.
+# su - zimbra
+$ zmprov ms $(zmhostname) +zimbraServiceInstalled cbpolicyd +zimbraServiceEnabled cbpolicyd
+$ zmcontrol restart
+
+
+// Install epel & remi repository.
+# yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+
+# yum install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
+
+
+// Reset module php.
+# yum module reset php
+
+
+// Enable remi repository.
+# yum module enable php:remi-7.4
+
+
+// Update repository.
+# yum check-update
+
+
+// Lakukan instalasi package yang diperlukan oleh CBPolicyd.
+# yum install httpd php 
+
+
+// Lakukan pengecekan module php dan pastikan module sqlite3 sudah terinstall.
+# php -m
+
+
+[PHP Modules]
+bz2
+calendar
+Core
+ctype
+curl
+date
+sqlite3 
+
+
+// Merubah default port httpd dari 80 ke 8880 dengan mengubah line berikut pada file /etc/httpd/conf/httpd.conf.
+# vim /etc/httpd/conf/httpd.conf 
+
+
+Listen 8880 
+
+
+// Buat file konfigurasi baru pada directory /etc/httpd/conf.d/CBPolicyd.conf dengan isi sebagai berikut.
+# vim /etc/httpd/conf.d/CBPolicyd.conf 
+
+
+<VirtualHost *:8880>
+    # ServerAdmin email address for server issues
+    ServerAdmin webmaster@localhost
+
+    # The directory from which to serve files (this is the document root)
+    DocumentRoot /var/www/html/webui
+
+    # Log file locations
+    ErrorLog /var/log/httpd/error.log
+    CustomLog /var/log/httpd/access.log combined
+
+    # Directory settings for security and access permissions
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    # ErrorDocument directive can define custom error pages
+    # ErrorDocument 404 /custom_404.html
+    # ErrorDocument 500 /custom_500.html
+
+</VirtualHost>
+
+
+// Link directory yang dibutuhkan oleh CBPolicyd. 
+# cd /var/www/html
+# ln -s /opt/zimbra/common/share/webui
+
+
+// Sesuaikan konfigurasi file /opt/zimbra/common/share/webui/includes/config.php .
+# vim /opt/zimbra/common/share/webui/includes/config.php
+
+
+### Before
+$DB_DSN="mysql:host=localhost;dbname=cluebringer";
+
+### After
+$DB_DSN="sqlite:/opt/zimbra/data/cbpolicyd/db/cbpolicyd.sqlitedb";
+
+
+// Enable Access Control List untuk CBPolicyd.
+$ su - zimbra
+$ zmprov mcf +zimbraMtaRestriction 'check_policy_service inet:127.0.0.1:10031'
+$ zmprov ms $(zmhostname) zimbraCBPolicydAccessControlEnabled TRUE
+
+
+// Merubah permission pada directory /opt/zimbra/data/cbpolicyd/db.
+# chmod 777 -R /opt/zimbra/data/cbpolicyd/db
+
+
+// Restart service httpd.
+# systemctl restart httpd
+
+
+// Lakukan pengetesan akses ke webui CBPolicyd.
+http://ip-mtaproxy01:8880
+
