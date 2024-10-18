@@ -1,0 +1,31 @@
+// REBRANDING HALAMAN LOGIN
+
+cd /opt/zimbra/jetty_base/webapps/zimbra/skins/_base/logos
+cp LoginBanner.png LoginBanner.png.orig
+cp /home/jabetto/REBRANDING/LoginBanner.png LoginBanner.png
+
+// Mengubah posisi logo
+cp /opt/zimbra/jetty_base/webapps/zimbra/skins/_base/base3/skin.css /opt/zimbra/jetty_base/webapps/zimbra/skins/_base/base3/skin.css-orig
+nano /opt/zimbra/jetty_base/webapps/zimbra/skins/_base/base3/skin.css
+// Cari baris berikut.
+  .ImgLoginBanner                 {       background-repeat:no-repeat; @LoginBannerPosition@      @LoginBannerSize@   @LoginBanner@       }
+// Setelah itu ubah menjadi seperti berikut.
+.ImgLoginBanner {
+                 background-repeat:no-repeat;
+                 background-position: center;
+                 @LoginBannerSize@
+                 @LoginBanner@
+                 width: 300px;
+                 height: 160px;
+                 }
+
+// Restart mailbox 
+zmmailboxdctl restart
+zmprov fc all
+
+
+// REBRANDING LOGO PADA HALAMAN MAILBOX
+cd /opt/zimbra/jetty_base/webapps/zimbra/modern/clients/default/assets
+cp logo.svg logo.svg.orig
+cp /home/jabeto/REBRANDIN/logo-ASEI.svg logo.svg
+zmmailboxdctl restart; zmprov fc all
