@@ -29,3 +29,10 @@ cd /opt/zimbra/jetty_base/webapps/zimbra/modern/clients/default/assets
 cp logo.svg logo.svg.orig
 cp /home/jabeto/REBRANDIN/logo-ASEI.svg logo.svg
 zmmailboxdctl restart; zmprov fc all
+
+// Resize size logo AppBanner / logo.svg
+vi /opt/zimbra/jetty_base/webapps/zimbra/modern/css/***.***RANDOM***.css
+
+### CARI LINE BERIKUT
+--logo-height: 75px;
+
