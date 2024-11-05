@@ -1,0 +1,19 @@
+#!/bin/bash
+#script
+
+file=$*;
+while IFS=';' read -r f1 f2 f3
+do
+i=`zmprov ca $f1 Dumm1P4SSword displayName "$f2" zimbraAccountStatus $f3`
+
+echo account $f2 has been created;
+
+done < "$file"
+
+// Tambahan Parameter
+
+/// ----------- COS ---------------
+// Seach COS id dengan command berikut
+# zmprov gc (nama COS ) zimbraId
+// lalu masukan parameter berikut kedalam script
+zimbraCOSId ( zimbraId )
