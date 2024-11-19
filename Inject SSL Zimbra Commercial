@@ -1,0 +1,11 @@
+## Verify Certifikat
+/opt/zimbra/bin/zmcertmgr verifycrt comm /opt/zimbra/ssl/zimbra/commercial/commercial.key  /opt/server_domain_com.crt /opt/server_domain_com.ca-bundle
+
+## Deploy Certificate
+/opt/zimbra/bin/zmcertmgr deploycrt comm /opt/server_domain_com.crt /opt/server_domain_com.ca-bundle
+
+## Verify deployed Certificate
+/opt/zimbra/bin/zmcertmgr viewdeployedcrt
+
+## Restart zimbra
+zmontrol restart
