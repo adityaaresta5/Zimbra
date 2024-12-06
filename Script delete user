@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Skrip untuk menghapus akun email di Zimbra dari daftar file .txt
+# Pastikan Anda menjalankan skrip ini dengan hak akses root atau user Zimbra
+
+# Fungsi untuk menampilkan cara penggunaan
+usage() {
+    echo "Usage: $0 file.txt"
+    echo "Contoh: $0 daftar_email.txt"
+    exit 1
+}
+
+# Periksa apakah file diberikan sebagai argumen
+if [ -z "$1" ]; then
+    echo "Error: File daftar email tidak diberikan."
+    usage
+fi
+
+FILE=$1
+
+# Periksa apakah file ada
+if [ ! -f "$FILE" ]; then
+    echo "Error: File $FILE tidak ditemukan."
+    exit 1
+fi
+
+# Pastikan Anda adalah user Zimbra sebelum menjalankan perintah ini
+if [ "$(whoami)" != "zimbra" ]; then
+    echo "Error: Skrip ini harus dijalankan sebagai user Zimbra."
+    echo "Gunakan: su - zimbra"
+    exit 1
+fi
+
+# Loop melalui setiap baris dalam file dan hapus akun email
+echo "Menghapus akun email yang tercantum dalam $FILE"
+while IFS= read -r EMAIL; do
+    # Abaikan baris kosong
+    if [ -n "$EMAIL" ]; then
+        echo "Menghapus akun email: $EMAIL"
+        zmprov da "$EMAIL"
+        if [ $? -eq 0 ]; then
+            echo "Akun email $EMAIL berhasil dihapus."
+        else
+            echo "Gagal menghapus akun email $EMAIL. Periksa apakah alamat email valid."
+        fi
+    fi
+done < "$FILE"
+
+echo "Proses penghapusan selesai."
