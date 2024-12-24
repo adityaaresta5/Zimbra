@@ -1,0 +1,16 @@
+#!/bin/bash
+#script
+
+h1=10.15.39.85
+admin1=tsi-admin@jakarta.go.id
+passwd1="HaPp1LY3v3RAfT3R#"
+h2=10.15.43.188
+admin2=admin@jakarta.go.id
+passwd2="Jabetto123#"
+
+file=$*;
+while IFS=',' read -r f1
+do
+echo $f1 account is migrating;
+j=`imapsync --host1 $h1 --user1 $f1 --authuser1 $admin1 --password1 $passwd1 --host2 $h2 --user2 $f1 --authuser2 $admin2 --password2 $passwd2 --nofoldersizes --addheader --skipsize --allowsizemismatch`
+done < "$file"
