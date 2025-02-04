@@ -1,0 +1,1 @@
+grep "CreateAccount" /opt/zimbra/log/audit.log
